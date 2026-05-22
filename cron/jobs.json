@@ -26,7 +26,7 @@
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-22T17:12:18.722418+08:00",
-      "next_run_at": "2026-05-23T00:00:00+08:00",
+      "next_run_at": "2026-05-24T00:00:00+08:00",
       "last_run_at": null,
       "last_status": null,
       "last_error": null,
@@ -42,5 +42,5 @@
       "workdir": "/home/ubuntu/.hermes/hermes-agent"
     }
   ],
-  "updated_at": "2026-05-22T17:12:18.723061+08:00"
+  "updated_at": "2026-05-23T00:00:24.611466+08:00"
 }
