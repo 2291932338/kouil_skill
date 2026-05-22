@@ -244,3 +244,22 @@ fi
 | Credentials not persisting | Check `git config --global credential.helper` — must be `store` or `cache` |
 | Multiple GitHub accounts | Use SSH with different keys per host alias in `~/.ssh/config`, or per-repo credential URLs |
 | `gh: command not found` + no sudo | Use git-only Method 1 above — no installation needed |
+| `git fetch` / `git push` hangs against `https://github.com` but `https://api.github.com` works | Treat Git smart HTTP as network-impaired, not necessarily an auth failure. Add short timeouts to git calls and use the GitHub REST Git Database API as a fallback when practical. |
+| GitHub REST fallback returns `403 Resource not accessible by personal access token` | For fine-grained PATs, verify Repository access includes the target repo and **Contents: Read and write** is granted. For classic PATs, verify `repo` scope. Do not keep retrying with the same token. |
+
+### Headless PAT Setup Notes
+
+When a user provides a PAT in chat for a headless server, avoid echoing it back. Configure it non-interactively via `git credential approve`, then redact all diagnostic output:
+
+```bash
+set +x
+git config --global credential.helper store
+git credential approve <<EOF
+protocol=https
+host=github.com
+username=<github-username>
+password=<PAT>
+EOF
+```
+
+For verification and follow-up commands, use `GIT_TERMINAL_PROMPT=0` so failures do not hang waiting for credentials. Add command timeouts around `git fetch`, `git pull`, and `git push` in automation.
