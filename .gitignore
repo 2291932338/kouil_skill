@@ -1,0 +1,12 @@
+# never commit local secrets/runtime files
+.env
+auth.json
+credentials.json
+token.json
+logs/
+sessions/
+image_cache/
+audio_cache/
+cache/
+__pycache__/
+*.pyc
