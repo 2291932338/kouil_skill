@@ -38,9 +38,12 @@
         "chat_name": "oc_f9df66f82ab508826d4010b0649a8897",
         "thread_id": null
       },
-      "enabled_toolsets": null,
+      "enabled_toolsets": [
+        "terminal",
+        "file"
+      ],
       "workdir": "/home/ubuntu/.hermes/hermes-agent"
     }
   ],
-  "updated_at": "2026-05-23T00:02:36.204805+08:00"
+  "updated_at": "2026-05-23T01:06:36.445282+08:00"
 }
