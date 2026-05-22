@@ -1,0 +1,46 @@
+{
+  "jobs": [
+    {
+      "id": "43156a2534b9",
+      "name": "daily-hermes-config-github-sync",
+      "prompt": "\u6bcf\u65e5 Hermes \u914d\u7f6e\u540c\u6b65\u4efb\u52a1\u3002\u4f60\u4f1a\u6536\u5230\u9884\u8fd0\u884c\u811a\u672c sync_hermes_to_github.py \u7684\u8f93\u51fa\u3002\u8bf7\u7528\u4e2d\u6587\u7b80\u6d01\u6c47\u62a5\u540c\u6b65\u7ed3\u679c\uff1a\u6210\u529f\u65f6\u8bf4\u660e\u5df2\u63a8\u9001\u5230 https://github.com/2291932338/kouil_skill.git \u548c commit\uff1b\u5931\u8d25\u65f6\u8bf4\u660e\u5931\u8d25\u539f\u56e0\u548c\u9700\u8981\u7528\u6237\u5904\u7406\u7684\u4e0b\u4e00\u6b65\u3002\u4e0d\u8981\u8f93\u51fa\u4efb\u4f55\u5bc6\u94a5\u3001token \u6216\u654f\u611f\u503c\u3002",
+      "skills": [],
+      "skill": null,
+      "model": null,
+      "provider": null,
+      "base_url": null,
+      "script": "sync_hermes_to_github.py",
+      "context_from": null,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 0 * * *",
+        "display": "0 0 * * *"
+      },
+      "schedule_display": "0 0 * * *",
+      "repeat": {
+        "times": null,
+        "completed": 0
+      },
+      "enabled": true,
+      "state": "scheduled",
+      "paused_at": null,
+      "paused_reason": null,
+      "created_at": "2026-05-22T17:12:18.722418+08:00",
+      "next_run_at": "2026-05-23T00:00:00+08:00",
+      "last_run_at": null,
+      "last_status": null,
+      "last_error": null,
+      "last_delivery_error": null,
+      "deliver": "origin",
+      "origin": {
+        "platform": "feishu",
+        "chat_id": "oc_f9df66f82ab508826d4010b0649a8897",
+        "chat_name": "oc_f9df66f82ab508826d4010b0649a8897",
+        "thread_id": null
+      },
+      "enabled_toolsets": null,
+      "workdir": "/home/ubuntu/.hermes/hermes-agent"
+    }
+  ],
+  "updated_at": "2026-05-22T17:12:18.723061+08:00"
+}
