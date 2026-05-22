@@ -233,6 +233,14 @@ fi
 
 ---
 
+## GitHub API Fallback for Impaired Git HTTPS
+
+If `git fetch` / `git push` against `https://github.com` hangs or times out while `https://api.github.com` works, treat it as a Git smart HTTP/network impairment rather than immediately assuming bad credentials. Use short timeouts and `GIT_TERMINAL_PROMPT=0`; then fall back to the GitHub REST Git Database API when practical.
+
+See `references/github-api-fallback.md` for the full pattern, including empty-repo bootstrap, efficient inline tree creation, and the `PATCH /git/refs/heads/<branch>` endpoint quirk.
+
+---
+
 ## Troubleshooting
 
 | Problem | Solution |
