@@ -655,12 +655,10 @@ If Feishu is connected but the user gets no reply, do not stop at connection sta
 - **Slack bot only works in DMs**: Must subscribe to `message.channels` event. Without it, the bot ignores public channels.
 - **Windows HTTP 400 "No models provided"**: Config file encoding issue (BOM). Ensure `config.yaml` is saved as UTF-8 without BOM.
 
-### Auxiliary models not working
-If `auxiliary` tasks (vision, compression, session_search) fail silently, the `auto` provider can't find a backend. Either set `OPENROUTER_API_KEY` or `GOOGLE_API_KEY`, or explicitly configure each auxiliary task's provider:
-```bash
-hermes config set auxiliary.vision.provider <your_provider>
-hermes config set auxiliary.vision.model <model_name>
-```
+### Cron GitHub sync script timeouts
+
+If a Hermes cron job that syncs config/skills to GitHub fails with `Script timed out after 120s`, do not assume token failure first. In this environment, GitHub git HTTPS operations (`git fetch`, `git pull`, `git push`) can hang long enough to exceed the cron pre-run budget. Prefer an API-only sync path for scheduled jobs: keep local `git init/add/commit` only for inspectability, avoid all network git operations in the cron path, and publish via GitHub REST API. See `references/cron-github-sync-timeouts.md` for the exact workaround, API endpoint pitfalls, and verification steps.
+
 
 ---
 

@@ -29,7 +29,7 @@ Extend the sidecar record (`~/.hermes/skills/.usage.json`) with scoring fields:
 Pattern:
 
 - Keep lifecycle mutators (`set_state`, `archive_skill`, `restore_skill`, `set_pinned`, patch telemetry) protected by `is_agent_created()`.
-- Allow scoring telemetry for bundled/hub skills too, because low-value upstream skills should be disabled by config, not archived/deleted.
+- Allow scoring telemetry for bundled/hub skills too, so upstream skills still appear in score reports, but only agent-created skills are eligible for low-score auto-disable. Bundled/hub skills should not be added to `skills.disabled` by the scoring pass.
 - On `bump_use()`:
   - `use_count += 1`
   - `score += 1`
@@ -68,7 +68,8 @@ Recommended behavior:
 
 - Gate scoring reports separately from curator LLM review with `last_weekly_score_report_at`.
 - Default threshold should not disable fresh zero-score skills. Use a threshold like `-7`, not `0`.
-- Disable low-score skills by adding them to `skills.disabled` in `config.yaml` using `load_config()`/`save_config()`.
+- Disable low-score agent-created skills by adding them to `skills.disabled` in `config.yaml` using `load_config()`/`save_config()`.
+- Never auto-disable bundled/initial or hub-installed skills from the scoring pass; include them in score reports only. Use the `agent_created` flag from `all_skills_score_report()` as the eligibility gate.
 - Never delete skill files in the scoring report path.
 - Write both human and machine reports:
   - `~/.hermes/logs/skill-scores/<timestamp>/REPORT.md`

@@ -1,10 +1,10 @@
 {
-  "last_report_path": "/tmp/pytest-of-ubuntu/pytest-4/test_state_atomic_write_no_tmp0/.hermes/logs/curator/20260522-072514",
+  "last_report_path": "/tmp/pytest-of-ubuntu/pytest-7/test_curator_review_prompt_is_0/hermes_test/logs/curator/20260522-202817",
   "last_run_at": null,
-  "last_run_duration_seconds": 0.040798,
-  "last_run_summary": "auto: no changes; skill scores: no low-score disables (report: /tmp/pytest-of-ubuntu/pytest-4/test_maybe_run_curator_runs_wh0/.hermes/logs/skill-scores/20260522-072514); llm: skipped (no candidates)",
+  "last_run_duration_seconds": 0.056369,
+  "last_run_summary": "auto: no changes; skill scores: no low-score disables (report: /tmp/pytest-of-ubuntu/pytest-7/test_maybe_run_curator_runs_wh0/.hermes/logs/skill-scores/20260522-202817); llm: skipped (no candidates)",
   "last_weekly_score_report_at": null,
-  "last_weekly_score_report_path": "/tmp/pytest-of-ubuntu/pytest-4/test_maybe_run_curator_runs_wh0/.hermes/logs/skill-scores/20260522-072514",
+  "last_weekly_score_report_path": "/tmp/pytest-of-ubuntu/pytest-7/test_maybe_run_curator_runs_wh0/.hermes/logs/skill-scores/20260522-202817",
   "paused": true,
   "run_count": 0
 }
