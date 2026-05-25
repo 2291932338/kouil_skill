@@ -17,6 +17,141 @@ Use this skill any time a .pptx file is involved in any way — as input, output
 | Read/analyze content | `python -m markitdown presentation.pptx` |
 | Edit or create from template | Read [editing.md](editing.md) |
 | Create from scratch | Read [pptxgenjs.md](pptxgenjs.md) |
+| High-quality editable PPT with web-level design | Use the workflow below: combine `popular-web-designs` design tokens with `pptxgenjs.md` editable PowerPoint primitives |
+| Generated illustrations in editable decks | See `references/generated-illustrations-for-editable-ppt.md`: use high-quality generated visuals for hero/concept slides when native shapes look crude, while keeping text/data editable |
+| QA when rendering/extraction tools are missing | See `references/editable-ppt-verification-fallbacks.md` for zip/XML and `python-pptx` checks |
+
+---
+
+## High-Quality Editable PPT Workflow
+
+Use this workflow for **every PPT request by default**, even if the user does not explicitly say “high-quality” or “editable.” The baseline deliverable is a polished, visually distinctive deck that remains fully editable in PowerPoint. The goal is **not** to export static website screenshots into slides; the goal is to translate a high-quality web design system into editable PPT objects: text boxes, shapes, charts, tables, icons, and images.
+
+### 1. Pick a design system before writing slide code
+
+If the user asks for a premium / high-quality / beautiful / branded PPT and does not provide a template, pair this skill with `popular-web-designs`:
+
+1. Choose a design system that matches the topic and audience.
+   - AI / developer / infra: `linear.app`, `vercel`, `stripe`, `supabase`, `cursor`, `raycast`
+   - Product / startup / pitch: `stripe`, `framer`, `apple`, `airbnb`, `webflow`
+   - Enterprise / data-heavy: `ibm`, `hashicorp`, `sentry`, `clickhouse`, `coinbase`
+   - Premium dark visual: `linear.app`, `superhuman`, `revolut`, `bmw`, `spacex`
+2. Load the selected design template:
+   ```text
+   skill_view(name="popular-web-designs", file_path="templates/<site>.md")
+   ```
+3. Extract the reusable visual language:
+   - Color tokens: background, surface, text, muted text, accent, border
+   - Typography: heading/body/mono font families, weights, letter spacing
+   - Layout rhythm: margins, grid, card radius, shadows, spacing scale
+   - Component patterns: cards, pills, code blocks, dashboards, hero sections, comparison blocks
+
+### 2. Translate web tokens into editable PowerPoint primitives
+
+Map web design concepts to PptxGenJS objects:
+
+| Web design token/component | Editable PPT implementation |
+|---|---|
+| `background`, gradient, hero surface | Slide background color or generated background image only when necessary |
+| Cards / panels | `addShape(RECTANGLE)` or `ROUNDED_RECTANGLE` with fill, line, shadow |
+| Headings / body text | `addText` with `fontFace`, `fontSize`, `bold`, `color`, `charSpacing` |
+| Buttons / pills / tags | Rounded rectangles + editable text |
+| Metric tiles | Large editable numbers + small labels + optional icon |
+| Icons | `react-icons` → SVG/PNG inserted as separate movable image objects |
+| Charts | Native `addChart` whenever data should remain chart-editable |
+| Tables | Native `addTable` whenever tabular data should remain editable |
+| Code blocks | Monospace text in editable text boxes on dark/light panels |
+| Website screenshots | Use sparingly; only for literal product screenshots, not for general layout |
+| Generated hero illustrations | Acceptable as non-editable image assets when they materially improve visual quality; keep surrounding titles, labels, pills, diagrams, charts, and explanatory content editable |
+
+### 3. Preserve editability as a hard requirement
+
+Default to editable elements. Avoid flattening whole slides into a single image unless the user explicitly wants a static poster-like slide.
+
+Editable-first rules:
+
+- Use `addText` for all titles, labels, bullets, callouts, captions, and speaker-facing content.
+- Use native shapes for backgrounds, dividers, cards, badges, arrows, timelines, and diagrams.
+- Use native charts/tables for data that users may later change.
+- Use images only for photos, logos, icons, screenshots, illustrations, textures, or complex backgrounds.
+- Use high-quality generated illustrations for hero pages or conceptual visuals when native shapes would look crude; insert them as image assets while keeping the slide’s text and information architecture editable.
+- Never create the whole slide as HTML/CSS screenshot if the requested deliverable is an editable `.pptx`.
+- If a gradient is central to the design, generate only the gradient background as an image, then layer editable text/shapes/charts above it.
+
+### 4. Build a mini design system in code
+
+Before generating slides, define constants and helper functions so every slide feels like one coherent deck:
+
+```javascript
+const pptxgen = require("pptxgenjs");
+const pptx = new pptxgen();
+pptx.layout = "LAYOUT_16x9";
+pptx.author = "Hermes Agent";
+pptx.subject = "Editable high-quality PowerPoint";
+pptx.title = "Presentation";
+pptx.company = "";
+pptx.lang = "zh-CN";
+pptx.theme = {
+  headFontFace: "Aptos Display",
+  bodyFontFace: "Aptos",
+  lang: "zh-CN"
+};
+
+const C = {
+  bg: "0B1020",
+  surface: "111827",
+  surface2: "1F2937",
+  text: "F8FAFC",
+  muted: "94A3B8",
+  accent: "7C3AED",
+  accent2: "22D3EE",
+  border: "334155",
+  white: "FFFFFF"
+};
+const L = { W: 10, H: 5.625, m: 0.48, gap: 0.22 };
+const shadow = () => ({ type: "outer", color: "000000", opacity: 0.16, blur: 8, offset: 2, angle: 45 });
+
+function addTitle(slide, title, subtitle) {
+  slide.addText(title, { x: L.m, y: 0.34, w: 7.1, h: 0.42, margin: 0, fontFace: "Aptos Display", fontSize: 24, bold: true, color: C.text, breakLine: false, fit: "shrink" });
+  if (subtitle) slide.addText(subtitle, { x: L.m, y: 0.82, w: 7.8, h: 0.3, margin: 0, fontSize: 9.5, color: C.muted, fit: "shrink" });
+}
+
+function card(slide, x, y, w, h, opts = {}) {
+  slide.addShape(pptx.ShapeType.roundRect, {
+    x, y, w, h,
+    rectRadius: 0.08,
+    fill: { color: opts.fill || C.surface },
+    line: { color: opts.line || C.border, transparency: 35, width: 0.7 },
+    shadow: opts.shadow === false ? undefined : shadow()
+  });
+}
+```
+
+Adjust the constants from the chosen `popular-web-designs` template instead of defaulting to generic blue/white slides.
+
+### 5. Recommended slide patterns
+
+Use varied, design-system-inspired layouts rather than repeating title + bullets:
+
+- **Hero / title:** large editorial heading, subtitle, pill metadata, abstract shape or product screenshot.
+- **Executive summary:** 3–4 metric cards with short insight labels.
+- **Problem / opportunity:** asymmetric two-column layout with visual callout panel.
+- **Framework / process:** numbered horizontal timeline or vertical step cards.
+- **Comparison:** two or three editable columns with strong color coding.
+- **Data slide:** one native chart plus two insight callouts; avoid chart-only slides.
+- **Architecture / workflow:** editable shapes and connectors; avoid baked-in diagram screenshots.
+- **Roadmap:** swimlane or timeline with editable milestone cards.
+- **Closing:** bold statement, next steps, contact / appendix cue.
+
+### 6. QA for both visual quality and editability
+
+In addition to the required QA below:
+
+1. Render the `.pptx` to slide images and visually inspect spacing, contrast, alignment, overflow, and layout polish.
+2. Run text extraction with `python -m markitdown output.pptx` to confirm content is present as real text, not flattened images.
+3. If `markitdown`, LibreOffice, or Poppler are unavailable, verify editability by inspecting the `.pptx` zip directly and/or with `python-pptx`: count slides, extract text from `ppt/slides/slide*.xml`, check for expected keywords, count editable shapes (`<p:sp>`) versus pictures (`<p:pic>`), and check text box bounds.
+4. If possible, inspect the PPTX media folder after unpacking. A high-quality editable deck should not contain one giant full-slide image per slide unless explicitly intended.
+5. Verify that charts/tables/diagrams expected to be editable are implemented with native PPT objects.
 
 ---
 

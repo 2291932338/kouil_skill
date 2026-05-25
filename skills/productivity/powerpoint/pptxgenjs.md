@@ -9,12 +9,55 @@ let pres = new pptxgen();
 pres.layout = 'LAYOUT_16x9';  // or 'LAYOUT_16x10', 'LAYOUT_4x3', 'LAYOUT_WIDE'
 pres.author = 'Your Name';
 pres.title = 'Presentation Title';
+pres.company = '';
+pres.subject = 'Editable PowerPoint deck';
+pres.lang = 'zh-CN';
+pres.theme = {
+  headFontFace: 'Aptos Display',
+  bodyFontFace: 'Aptos',
+  lang: 'zh-CN'
+};
 
 let slide = pres.addSlide();
 slide.addText("Hello World!", { x: 0.5, y: 0.5, fontSize: 36, color: "363636" });
 
 pres.writeFile({ fileName: "Presentation.pptx" });
 ```
+
+### Editable-first design pattern
+
+For high-quality decks, treat PptxGenJS as a PowerPoint-native design system, not as a screenshot container. Build slides from editable primitives:
+
+```javascript
+const C = {
+  bg: "0B1020",
+  surface: "111827",
+  text: "F8FAFC",
+  muted: "94A3B8",
+  accent: "7C3AED",
+  border: "334155"
+};
+const L = { W: 10, H: 5.625, m: 0.48, gap: 0.22 };
+const makeShadow = () => ({ type: "outer", color: "000000", opacity: 0.16, blur: 8, offset: 2, angle: 45 });
+
+function addCard(slide, x, y, w, h, fill = C.surface) {
+  slide.addShape(pres.ShapeType.roundRect, {
+    x, y, w, h,
+    rectRadius: 0.08,
+    fill: { color: fill },
+    line: { color: C.border, transparency: 35, width: 0.7 },
+    shadow: makeShadow()
+  });
+}
+
+function addMetric(slide, x, y, w, value, label) {
+  addCard(slide, x, y, w, 1.0);
+  slide.addText(value, { x: x + 0.18, y: y + 0.16, w: w - 0.36, h: 0.35, margin: 0, fontSize: 24, bold: true, color: C.text, fit: "shrink" });
+  slide.addText(label, { x: x + 0.18, y: y + 0.58, w: w - 0.36, h: 0.22, margin: 0, fontSize: 8.5, color: C.muted, fit: "shrink" });
+}
+```
+
+Use screenshots only for literal screenshots/photos or complex background effects. Keep titles, labels, metrics, diagrams, charts, and tables editable.
 
 ## Layout Dimensions
 
