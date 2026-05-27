@@ -19,15 +19,15 @@
       "schedule_display": "0 0 * * *",
       "repeat": {
         "times": null,
-        "completed": 5
+        "completed": 6
       },
       "enabled": true,
       "state": "scheduled",
       "paused_at": null,
       "paused_reason": null,
       "created_at": "2026-05-22T17:12:18.722418+08:00",
-      "next_run_at": "2026-05-28T00:00:00+08:00",
-      "last_run_at": "2026-05-26T00:00:54.433294+08:00",
+      "next_run_at": "2026-05-29T00:00:00+08:00",
+      "last_run_at": "2026-05-27T00:00:48.847473+08:00",
       "last_status": "ok",
       "last_error": null,
       "last_delivery_error": null,
@@ -45,5 +45,5 @@
       "workdir": "/home/ubuntu/.hermes/hermes-agent"
     }
   ],
-  "updated_at": "2026-05-27T00:00:11.093823+08:00"
+  "updated_at": "2026-05-28T00:00:52.421450+08:00"
 }
