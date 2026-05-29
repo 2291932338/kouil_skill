@@ -1,7 +1,7 @@
 model:
-  default: gpt-5.5
+  default: mimo-v2.5-pro
   provider: custom
-  base_url: https://api.the5288.com/v1
+  base_url: https://token-plan-cn.xiaomimimo.com/v1
   api_key: '[REDACTED]'
 providers: {}
 fallback_providers: []
@@ -126,10 +126,10 @@ bedrock:
     trace: disabled
 auxiliary:
   vision:
-    provider: auto
-    model: ''
-    base_url: ''
-    api_key: ''
+    provider: custom
+    model: mimo-v2.5
+    base_url: https://token-plan-cn.xiaomimimo.com/v1
+    api_key: '[REDACTED]'
     timeout: 120
     extra_body: {}
     download_timeout: 30
@@ -327,7 +327,7 @@ slack:
 mattermost:
   channel_prompts: {}
 approvals:
-  mode: manual
+  mode: smart
   timeout: 60
   cron_mode: deny
   mcp_reload_confirm: true

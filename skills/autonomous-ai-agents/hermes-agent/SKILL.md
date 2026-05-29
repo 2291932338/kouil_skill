@@ -610,8 +610,22 @@ When adding usage-based skill scoring or reducing skill context pollution, follo
 ### Gateway issues
 Check logs first:
 ```bash
-grep -i "failed to send\|error" ~/.hermes/logs/gateway.log | tail -20
+grep -i "failed to send\\|error" ~/.hermes/logs/gateway.log | tail -20
 ```
+
+### Stuck session causing no-reply on messaging platforms
+If the user reports "messages not being replied to" on any gateway platform (Feishu, Telegram, etc.), check for a **stuck session** before investigating API or config issues. A session stuck in a loop (e.g. repeated subagent timeouts, empty-response nudges) will block new messages. Diagnosis and fix:
+
+```bash
+hermes sessions list                                    # find stale sessions
+grep "empty\|nudge\|timeout" ~/.hermes/logs/gateway.log # confirm the loop
+echo "y" | hermes sessions delete <stuck-id>            # clear it
+hermes gateway start                                     # restart cleanly
+```
+
+See `references/feishu-gateway-setup.md` → "Diagnosing stuck sessions and empty response loops" for the full diagnosis path and API health verification steps.
+
+**Pitfall: `gateway restart` can cause TEMPFAIL (exit 75).** If the gateway process is mid-operation (API call, approval callback), `restart` sends SIGUSR1 which may kill it ungracefully. systemd then enters a cooldown before auto-restart. Prefer `hermes gateway start` which starts a fresh process reliably. If restart already caused TEMPFAIL, `start` recovers it.
 
 ### Telegram gateway quick setup
 
