@@ -1,0 +1,125 @@
+{
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anyrouter/gpt-5.5"
+      },
+      "models": {
+        "anyrouter/gpt-5.5": {
+          "alias": "gpt-5.5"
+        }
+      },
+      "thinkingDefault": "medium",
+      "timeoutSeconds": 300
+    }
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "anyrouter": {
+        "baseUrl": "https://kouilss.top/v1",
+        "apiKey": "***REDACTED***",
+        "api": "openai-responses",
+        "models": [
+          {
+            "id": "gpt-5.5",
+            "name": "gpt-5.5",
+            "api": "openai-responses",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "contextTokens": "***REDACTED***",
+            "maxTokens": "***REDACTED***"
+          }
+        ],
+        "timeoutSeconds": 300
+      }
+    }
+  },
+  "gateway": {
+    "mode": "local",
+    "auth": {
+      "mode": "token",
+      "token": "***REDACTED***"
+    },
+    "port": 18789,
+    "bind": "loopback",
+    "tailscale": {
+      "mode": "off",
+      "resetOnExit": false
+    },
+    "controlUi": {
+      "allowInsecureAuth": true
+    },
+    "nodes": {
+      "denyCommands": [
+        "camera.snap",
+        "camera.clip",
+        "screen.record",
+        "contacts.add",
+        "calendar.add",
+        "reminders.add",
+        "sms.send",
+        "sms.search"
+      ]
+    }
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
+  },
+  "tools": {
+    "profile": "coding"
+  },
+  "wizard": {
+    "lastRunAt": "2026-06-06T09:40:00.340Z",
+    "lastRunVersion": "2026.6.1",
+    "lastRunCommand": "manual-config",
+    "lastRunMode": "local"
+  },
+  "meta": {
+    "lastTouchedVersion": "2026.6.1",
+    "lastTouchedAt": "2026-06-06T12:14:32.287Z"
+  },
+  "plugins": {
+    "entries": {
+      "telegram": {
+        "enabled": true
+      }
+    }
+  },
+  "channels": {
+    "telegram": {
+      "enabled": true,
+      "name": "telegram-bot",
+      "botToken": "***REDACTED***"
+    }
+  },
+  "commands": {
+    "ownerAllowFrom": [
+      "telegram:8564570899"
+    ]
+  },
+  "mcp": {
+    "servers": {
+      "github": {
+        "command": "bash",
+        "args": [
+          "-lc",
+          "export GITHUB_PERSONAL_ACCESS_TOKEN=$(cat /root/.openclaw/secrets/github_token); exec npx -y @modelcontextprotocol/server-github"
+        ],
+        "connectTimeout": 60,
+        "timeout": 60,
+        "supportsParallelToolCalls": true
+      }
+    }
+  }
+}

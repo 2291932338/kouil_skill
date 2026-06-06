@@ -1,26 +1,23 @@
-# Hermes 配置迁移快照
+# OpenClaw 配置迁移快照
 
-这个仓库由 Hermes Agent 自动从 `/home/ubuntu/.hermes` 同步维护，用于备份和迁移当前 Hermes 的使用习惯、技能和可迁移配置。
+这个仓库现在由 OpenClaw 安全同步脚本维护，用于备份和迁移可公开/可复用的 OpenClaw 配置片段与 skills。
 
-最近同步时间：2026-06-04T16:00:48.819526+00:00
+最近同步时间：2026-06-06T13:03:04.910742+00:00
 
 ## 已包含内容
 
-- `skills/`：当前启用/维护的 Hermes skills
-- `plugins/`：用户插件（如果存在）
-- `config/config.yaml`：已脱敏的 Hermes 配置
-- `config/.env.example`：环境变量模板，只保留变量名，值已脱敏
-- `cron/`：定时任务元数据（如果存在），明显敏感内容会被脱敏
-- `root-files/`：可迁移的根目录人格、上下文和说明文件（如果存在）
+- `skills/hermes-migrated/`：从旧 Hermes 快照迁入且未与 OpenClaw 内置技能冲突的 skills
+- `root-files/`：可迁移的工作区说明/人格/本地工具说明文件（不含 MEMORY.md）
+- `openclaw-config/openclaw.example.json`：脱敏后的 OpenClaw 配置示例
+- `migration-reports/`：Hermes → OpenClaw 迁移报告
 
 ## 已故意排除的内容
 
-- `.env`、`auth.json`、OAuth tokens、API keys、密码等敏感凭证
-- sessions、logs、caches、图片/音频缓存等运行时数据
-- virtualenvs、`__pycache__`、生成的字节码等临时文件
+- `MEMORY.md`、`memory/`、sessions、logs、caches、运行时状态
+- `.env`、tokens、OAuth、API keys、密码、credentials、auth 文件
+- GitHub/MCP/Telegram 等真实凭证
 
-## 如何用于迁移
+## 迁移说明
 
-在新机器上克隆这个仓库后，可以把需要的 `skills/`、`plugins/`、`config/config.yaml` 和 `root-files/` 内容复制到新的 Hermes 配置目录。密钥和 token 不会被同步，需要你手动根据 `config/.env.example` 重新填入新的 `.env`。
-
-> 注意：这个仓库是迁移快照，不是完整的 Hermes 运行目录备份。这样做是为了避免泄露密钥、会话记录和运行时缓存。
+在新 OpenClaw 环境中，可复制 `skills/hermes-migrated/` 到工作区 `skills/` 下，或按需挑选单个 skill。
+`openclaw.example.json` 只作结构参考，真实密钥需要在新环境中重新配置。

@@ -3,10 +3,15 @@
 auth.json
 credentials.json
 token.json
+MEMORY.md
+memory/
 logs/
 sessions/
 image_cache/
 audio_cache/
 cache/
+state/
+credentials/
+secrets/
 __pycache__/
 *.pyc
