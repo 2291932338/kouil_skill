@@ -10,7 +10,16 @@
         }
       },
       "thinkingDefault": "medium",
-      "timeoutSeconds": 300
+      "timeoutSeconds": 300,
+      "memorySearch": {
+        "enabled": true,
+        "provider": "openai-compatible",
+        "model": "text-embedding-v4",
+        "remote": {
+          "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+          "apiKey": "***REDACTED***"
+        }
+      }
     }
   },
   "models": {
