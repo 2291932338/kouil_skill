@@ -10,7 +10,7 @@
         }
       },
       "thinkingDefault": "medium",
-      "timeoutSeconds": 300,
+      "timeoutSeconds": 900,
       "memorySearch": {
         "enabled": true,
         "provider": "openai-compatible",
@@ -96,7 +96,7 @@
   },
   "meta": {
     "lastTouchedVersion": "2026.6.1",
-    "lastTouchedAt": "2026-06-06T12:14:32.287Z"
+    "lastTouchedAt": "2026-06-06T22:35:55.140Z"
   },
   "plugins": {
     "entries": {
@@ -109,12 +109,17 @@
     "telegram": {
       "enabled": true,
       "name": "telegram-bot",
-      "botToken": "***REDACTED***"
+      "botToken": "***REDACTED***",
+      "allowFrom": [
+        "8564570899",
+        "6697565064"
+      ]
     }
   },
   "commands": {
     "ownerAllowFrom": [
-      "telegram:8564570899"
+      "telegram:8564570899",
+      "telegram:6697565064"
     ]
   },
   "mcp": {
