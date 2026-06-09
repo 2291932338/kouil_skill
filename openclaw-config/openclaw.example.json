@@ -86,7 +86,12 @@
     "dmScope": "per-channel-peer"
   },
   "tools": {
-    "profile": "coding"
+    "profile": "coding",
+    "web": {
+      "search": {
+        "provider": "tavily"
+      }
+    }
   },
   "wizard": {
     "lastRunAt": "2026-06-06T09:40:00.340Z",
@@ -96,7 +101,7 @@
   },
   "meta": {
     "lastTouchedVersion": "2026.6.1",
-    "lastTouchedAt": "2026-06-08T18:47:46.510Z"
+    "lastTouchedAt": "2026-06-09T04:11:35.550Z"
   },
   "plugins": {
     "entries": {
@@ -105,6 +110,15 @@
       },
       "feishu": {
         "enabled": true
+      },
+      "tavily": {
+        "enabled": true,
+        "config": {
+          "webSearch": {
+            "apiKey": "***REDACTED***",
+            "baseUrl": "https://api.tavily.com"
+          }
+        }
       }
     }
   },
@@ -116,7 +130,14 @@
       "allowFrom": [
         "8564570899",
         "6697565064"
-      ]
+      ],
+      "streaming": {
+        "mode": "partial",
+        "preview": {
+          "toolProgress": true,
+          "commandText": "status"
+        }
+      }
     },
     "feishu": {
       "enabled": true,
@@ -142,7 +163,8 @@
   "commands": {
     "ownerAllowFrom": [
       "telegram:8564570899",
-      "telegram:6697565064"
+      "telegram:6697565064",
+      "feishu:ou_04b537f1ac2cd79ca13d5148c60d4336"
     ]
   },
   "mcp": {
@@ -157,6 +179,37 @@
         "timeout": 60,
         "supportsParallelToolCalls": true
       }
+    }
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "self-improvement": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "approvals": {
+    "plugin": {
+      "enabled": true,
+      "mode": "targets",
+      "agentFilter": [
+        "main"
+      ],
+      "targets": [
+        {
+          "channel": "telegram",
+          "to": "8564570899",
+          "accountId": "default"
+        },
+        {
+          "channel": "telegram",
+          "to": "6697565064",
+          "accountId": "default"
+        }
+      ]
     }
   }
 }
