@@ -2,11 +2,15 @@
   "agents": {
     "defaults": {
       "model": {
-        "primary": "anyrouter/gpt-5.5"
+        "primary": "dashscope/glm-5.2",
+        "fallbacks": []
       },
       "models": {
         "anyrouter/gpt-5.5": {
           "alias": "gpt-5.5"
+        },
+        "dashscope/glm-5.2": {
+          "alias": "glm-5.2"
         }
       },
       "thinkingDefault": "medium",
@@ -50,7 +54,37 @@
             "maxTokens": "***REDACTED***"
           }
         ],
-        "timeoutSeconds": 300
+        "timeoutSeconds": 60
+      },
+      "dashscope": {
+        "baseUrl": "https://dashscope.aliyuncs.com/compatible-mode/v1",
+        "apiKey": "***REDACTED***",
+        "api": "openai-completions",
+        "timeoutSeconds": 60,
+        "models": [
+          {
+            "id": "glm-5.2",
+            "name": "glm-5.2",
+            "api": "openai-completions",
+            "reasoning": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "cost": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0
+            },
+            "contextWindow": 200000,
+            "contextTokens": "***REDACTED***",
+            "maxTokens": "***REDACTED***",
+            "compat": {
+              "thinkingFormat": "deepseek"
+            }
+          }
+        ]
       }
     }
   },
@@ -149,7 +183,7 @@
       "requireMention": true,
       "typingIndicator": true,
       "resolveSenderNames": true,
-      "streaming": true,
+      "streaming": false,
       "accounts": {
         "default": {
           "appId": "cli_aa854497ad7b1bd0",
@@ -157,7 +191,8 @@
           "name": "kouil-feishu-bot",
           "enabled": true
         }
-      }
+      },
+      "renderMode": "card"
     }
   },
   "commands": {
